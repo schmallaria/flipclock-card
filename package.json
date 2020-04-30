@@ -17,7 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "custom-card-helpers": "^1.5.0",
-    "flipclock": "schmallaria/FlipClock#js-es6",
+    "flipclock": "github:schmallaria/FlipClock#js-es6",
     "lit-element": "^2.3.1"
   },
   "devDependencies": {
