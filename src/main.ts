@@ -22,10 +22,13 @@ export class FlipClockCard extends LitElement {
   private _date!: Date;
   private _timezones!: Timezone[];
   private _clockFaces: string[] = ['TwentyFourHourClock', 'TwelveHourClock'];
+  private _firstUpdated = false;
 
   set hass(hass: HomeAssistant) {
     this._hass = hass;
     this._date = new Date();
+
+    setInterval(this.updateTimezones.bind(this), 500);
   }
 
   public setConfig(config: FlipClockCardConfig): void {
@@ -62,6 +65,14 @@ export class FlipClockCard extends LitElement {
         title: typeof item == 'string' ? item : (item as Timezone).title,
       });
     });
+  }
+
+  protected shouldUpdate(): boolean {
+    return !this._firstUpdated;
+  }
+
+  protected firstUpdated(): void {
+    this._firstUpdated = true;
   }
 
   protected render(): TemplateResult | void {
@@ -124,28 +135,39 @@ export class FlipClockCard extends LitElement {
     return date.toLocaleDateString(l, o);
   }
 
+  private formatTimezone(tzId: string): string {
+    return this.formatDate(this._date, {
+      hour: 'numeric',
+      minute: 'numeric',
+      timeZone: tzId,
+      weekday: 'short',
+    });
+  }
+
   private renderTimezones(): TemplateResult {
     return html`
       <div class="fc-timezone" id="fc_timezone">
         ${this._timezones.map(
-          (item) => html`
+          (item, index) => html`
             <div class="item">
               <div class="tz">
                 <ha-icon class="tz-icon" icon="mdi:clock-outline"></ha-icon>
                 <div class="tz-locale">${item.title}</div>
               </div>
-              <div class="tz-time">
-                ${this.formatDate(this._date, {
-                  hour: 'numeric',
-                  minute: 'numeric',
-                  timeZone: item.id,
-                  weekday: 'short',
-                })}
+              <div class="tz-time" id="tz_${index}">
+                ${this.formatTimezone(item.id)}
               </div>
             </div>
           `,
         )}
       </div>
     `;
+  }
+
+  private updateTimezones(): void {
+    this._timezones.map((item, index) => {
+      const el = this.shadowRoot?.getElementById(`tz_${index}`);
+      if (el) el.innerHTML = this.formatTimezone(item.id);
+    });
   }
 }
