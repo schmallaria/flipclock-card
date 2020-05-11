@@ -73,7 +73,7 @@ This card is available in [HACS](https://github.com/custom-components/hacs/issue
 #### Time options
 | Name | Type | Default | Since | Description |
 |------|----|-------|-----:|-------------|
-| face | ClockFace | TwentyFourHourClock | v0.0.1 | The clock face. Default 24 hour clock. See  [clock faces](#clock-faces) for available values.
+| face | string | TwentyFourHourClock | v0.0.1 | The clock face. Default 24 hour clock. See  [clock faces](#clock-faces) for available values.
 | showSeconds | boolean  | false | v0.0.1 | True to show the seconds, otherwise false.
 
 #### Date options
@@ -81,7 +81,7 @@ This card is available in [HACS](https://github.com/custom-components/hacs/issue
 |------|----|-------|-----:|-------------|
 | format | string | TwentyFourHourClock | v0.0.1 | Date format options. [See here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) for available options.
 | hidden | boolean | false | v0.0.1 | False to show the date, otherwise true.
-| locale | string | HASS system language | v0.0.1 | The date language. See [See here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) for available value. 
+| locale | string | HASS system language | v0.0.1 | The date language. [See here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) for available value. 
 
 #### Timezone options
 | Name | Type | Default | Since | Description |
